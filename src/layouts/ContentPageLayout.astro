@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { resolveFeaturedImage } from '../lib/blogImages';
 import BaseLayout from './BaseLayout.astro';
 import { shouldShowFeaturedImage, isUsableFeaturedImage } from '../lib/featured-image';
 
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const featuredImage = entry.data.featuredImage;
+const featuredImage = resolveFeaturedImage(entry.data, entry.body);
 const showFeatured = shouldShowFeaturedImage(featuredImage, entry.body);
 const ogImage = isUsableFeaturedImage(featuredImage) ? featuredImage : undefined;
 ---

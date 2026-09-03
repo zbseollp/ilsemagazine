@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { resolveFeaturedImage } from '../lib/blogImages';
 import { isUsableFeaturedImage } from '../lib/featured-image';
 
 interface Props {
@@ -17,8 +18,9 @@ function formatDate(date: Date): string {
 }
 
 const slug = entry.id;
-const image = isUsableFeaturedImage(entry.data.featuredImage)
-  ? entry.data.featuredImage
+const resolvedFeatured = resolveFeaturedImage(entry.data, entry.body);
+const image = isUsableFeaturedImage(resolvedFeatured)
+  ? resolvedFeatured
   : undefined;
 const imageAlt = entry.data.imageAlt ?? entry.data.title;
 const postUrl = `/${slug}/`;

@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { resolveFeaturedImage } from '../lib/blogImages';
 import { allSiteSlugs } from '../data/pages';
 import BlogPostLayout from '../layouts/BlogPostLayout.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
@@ -117,7 +118,7 @@ const { Content } =
     title={props.entry.data.title}
     description={props.entry.data.description}
     html={liveHtml!}
-    featuredImage={props.entry.data.featuredImage}
+    featuredImage={resolveFeaturedImage(props.entry.data, props.entry.body) ?? undefined}
   >
     <Header slot="header" />
     <Footer slot="footer" />
@@ -137,7 +138,7 @@ const { Content } =
     title={props.entry.data.title}
     description={props.entry.data.description}
     html={liveHtml!}
-    featuredImage={props.entry.data.featuredImage}
+    featuredImage={resolveFeaturedImage(props.entry.data, props.entry.body) ?? undefined}
   >
     <Header slot="header" />
     <Footer slot="footer" />

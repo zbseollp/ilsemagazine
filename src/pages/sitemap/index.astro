@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { resolveFeaturedImage } from '../../lib/blogImages';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
@@ -143,7 +144,7 @@ function formatDate(date: Date): string {
                 <li class="sitemap-related__item">
                   <a href={`/${post.id}/`} class="sitemap-related__thumb">
                     <img
-                      src={post.data.featuredImage ?? '/wp-content/uploads/2025/12/18982.jpg'}
+                      src={resolveFeaturedImage(post.data, post.body) ?? '/wp-content/uploads/2025/12/18982.jpg'}
                       alt=""
                       width="320"
                       height="200"

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { resolveFeaturedImage } from '../lib/blogImages';
 import BaseLayout from './BaseLayout.astro';
 import { shouldShowFeaturedImage, isUsableFeaturedImage } from '../lib/featured-image';
 
@@ -17,7 +18,9 @@ function formatDate(date: Date): string {
   return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
-const featuredImage = entry.data.featuredImage;
+// Resolve before the usability checks — a raw bucket-root R2 URL looks
+// 'usable' but 404s in the browser.
+const featuredImage = resolveFeaturedImage(entry.data, entry.body);
 const imageAlt = entry.data.imageAlt ?? entry.data.title;
 const showFeatured = shouldShowFeaturedImage(featuredImage, entry.body);
 const ogImage = isUsableFeaturedImage(featuredImage) ? featuredImage : undefined;
